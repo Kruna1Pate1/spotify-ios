@@ -11,6 +11,7 @@ class APIManagerInterceptor: RequestInterceptor {
     
     // MARK: - Vars & Lets
     private let refreshTokenViewModel = RefreshTokenViewModel()
+    private var isRetrying = false
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         var newRequest = urlRequest
@@ -26,8 +27,12 @@ class APIManagerInterceptor: RequestInterceptor {
     
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         if (request.error?.responseCode == 401) {
-            refreshTokenViewModel.isSuccess.bind { isSucsess in
-                isSucsess ? completion(.retryWithDelay(1)) : completion(.doNotRetry)
+            guard !isRetrying else { return }
+            
+            isRetrying = true
+            refreshTokenViewModel.isSuccess.bind { [weak self] isSucsess in
+                isSucsess ? completion(.retry) : completion(.doNotRetry)
+                self?.isRetrying = false
             }
             refreshTokenViewModel.callRefreshToken()
         } else {
