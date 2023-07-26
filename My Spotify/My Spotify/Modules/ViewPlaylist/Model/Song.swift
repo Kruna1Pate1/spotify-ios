@@ -27,6 +27,7 @@ struct TrackData: Codable {
     let durationMs: Int?
     let id: String?
     let name: String?
+    let previewUrl: String?
 }
 
 struct SongAlbum: Codable {

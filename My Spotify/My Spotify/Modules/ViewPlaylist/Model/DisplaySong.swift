@@ -17,6 +17,7 @@ struct DisplaySongData {
     var songDuration: Int? = nil
     var title: String? = nil
     var subTitle: String? = nil
+    var previewUrl: String? = nil
 }
 
 struct DisplayAlbumFooterView {

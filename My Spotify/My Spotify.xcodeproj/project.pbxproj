@@ -195,6 +195,7 @@
 		E8042EDE2A5BE1BC00431CC1 /* TrackOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackOptionsViewModel.swift; sourceTree = "<group>"; };
 		E8042EE02A5BEC9100431CC1 /* TrackOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackOptionCell.swift; sourceTree = "<group>"; };
 		E8042EE32A5BED1500431CC1 /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
+		E811860E2A71163800246D5E /* My Spotify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "My Spotify.entitlements"; sourceTree = "<group>"; };
 		E84F68412A55937E00430D8A /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		E85A2E102A5ED93000E922B5 /* CategoryPlaylistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPlaylistCell.swift; sourceTree = "<group>"; };
 		E85A2E112A5ED93000E922B5 /* CategoryPlaylistCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryPlaylistCell.xib; sourceTree = "<group>"; };
@@ -708,6 +709,7 @@
 		E8B375FE2A53F6BE006107FD /* My Spotify */ = {
 			isa = PBXGroup;
 			children = (
+				E811860E2A71163800246D5E /* My Spotify.entitlements */,
 				E8C38E4A2A57CF19004CE02F /* Models */,
 				E84F68402A55936400430D8A /* Helpers */,
 				E8D6D4D02A5537AA00D2D965 /* Utils */,
@@ -1336,6 +1338,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "My Spotify/My Spotify.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1365,6 +1368,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "My Spotify/My Spotify.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;

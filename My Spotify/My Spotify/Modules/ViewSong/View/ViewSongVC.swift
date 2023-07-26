@@ -8,6 +8,7 @@
 import UIKit
 import Kingfisher
 import MotionToastView
+import AVFoundation
 
 class ViewSongVC: UIViewController, Storyboarded {
     
@@ -22,6 +23,7 @@ class ViewSongVC: UIViewController, Storyboarded {
     @IBOutlet private weak var btnSuffle: UIButton!
     @IBOutlet private weak var lblArtistName: UILabel!
     @IBOutlet private weak var lblSongName: UILabel!
+    @IBOutlet private weak var btnPlayPause: UIButton!
     
     // MARK: - variables
     var coordinator: ViewSongCoordinator?
@@ -31,6 +33,7 @@ class ViewSongVC: UIViewController, Storyboarded {
     var viewModel = ViewSongViewModel()
     var albumSongs: DisplaySong = DisplaySong(type: .album, data: [])
     var currentTrack: Track?
+    let player: AVPlayer? = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.audioPlayer
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +42,7 @@ class ViewSongVC: UIViewController, Storyboarded {
     }
     
     override open var shouldAutorotate: Bool {
-          return false
+        return false
     }
     
     private func setUpUI() {
@@ -59,6 +62,9 @@ class ViewSongVC: UIViewController, Storyboarded {
     }
     
     private func setDataToUI() {
+        btnPlayPause.isSelected = true
+        setupAudioPlayback()
+        setupNotification()
         if let songs = songs, let currentSong = currentSong, let imageUrl = songs.data?[currentSong].image {
             imgThumbnail.layer.cornerRadius = 20
             imgThumbnail.kf.setImage(with: URL(string: imageUrl))
@@ -110,10 +116,11 @@ class ViewSongVC: UIViewController, Storyboarded {
             self.songs = songs
             self.currentSong = songs?.data?.enumerated().first { $0.element.id  == self.trackId }?.offset ?? 0
             self.setDataToUI()
+            self.setupAudioPlayback()
         }
         
         viewModel.reloadData.bind { [weak self] in
-
+            
             self?.btnLike.isSelected.toggle()
             if let isLiked = self?.btnLike.isSelected {
                 let image = (UIImage(systemName: "checkmark") ?? UIImage(systemName: "trash"))?                   .withTintColor(.white).withRenderingMode(.alwaysOriginal)
@@ -132,6 +139,33 @@ class ViewSongVC: UIViewController, Storyboarded {
         
         viewModel.errorMessage.bind { [weak self] message in
             self?.showAlert(title: message)
+        }
+    }
+    
+    private func setupAudioPlayback() {
+        guard let currentSong = currentSong, let previewUrl = songs?.data?[currentSong].previewUrl, let url = URL(string: previewUrl) else {
+            return
+        }
+        player?.replaceCurrentItem(with: AVPlayerItem(url: url))
+        btnPlayPause.isSelected ? player?.play() : player?.pause()
+    }
+    
+    private func setupNotification() {
+        guard let currentSong = currentSong, let song = songs?.data?[currentSong] else {
+            return
+        }
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            debugPrint(granted)
+        }
+        let content = UNMutableNotificationContent()
+        content.title = song.title ?? ""
+        content.subtitle = song.artistsName ?? ""
+        let uuid = UUID().uuidString
+        let triger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let request = UNNotificationRequest(identifier: uuid, content: content, trigger: triger)
+        center.add(request) { error in
+            debugPrint(error)
         }
     }
     
@@ -155,6 +189,7 @@ class ViewSongVC: UIViewController, Storyboarded {
     
     @IBAction func btnPausePlay(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
+        sender.isSelected ? player?.play() : player?.pause()
     }
     
     @IBAction func btnLike(_ sender: UIButton) {

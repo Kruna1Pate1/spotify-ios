@@ -194,6 +194,7 @@
                     </view>
                     <connections>
                         <outlet property="btnLike" destination="3Gn-lp-pnq" id="mCE-Zw-qcK"/>
+                        <outlet property="btnPlayPause" destination="x4m-Fn-DhL" id="VCY-mD-Mqf"/>
                         <outlet property="btnSuffle" destination="b8U-CZ-23G" id="gpz-GI-K8t"/>
                         <outlet property="imgLike" destination="3Gn-lp-pnq" id="Oby-Gz-boz"/>
                         <outlet property="imgThumbnail" destination="RRi-BY-Plj" id="Njh-hR-9cO"/>
@@ -228,7 +229,7 @@
             <color red="0.12549019607843137" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Surface">
-            <color red="0.12549019607843137" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.125" green="0.1289999932050705" blue="0.14100000262260437" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="tintColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
